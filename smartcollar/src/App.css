@@ -1,0 +1,214 @@
+/* App.css - modernized + design tokens */
+:root{
+  --bg: #0f1724;            /* used for dark-like accent, override for light mode */
+  --surface: #ffffff;
+  --muted: #7b8aa5;
+  --primary-500: #5b6ffb;
+  --primary-600: #4b57e6;
+  --accent: #7c3aed;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --glass: rgba(255,255,255,0.06);
+  --card-elev: 0 6px 24px rgba(11, 15, 28, 0.18);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --spacing-base: 16px;
+  --max-width: 1200px;
+  --transition-fast: 180ms;
+  --transition-std: 300ms;
+  --shadow-soft: 0 6px 20px rgba(16, 24, 40, 0.08);
+  --focus-ring: 0 0 0 4px rgba(91,111,251,0.14);
+}
+
+/* Utility reset */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #f7fafc 0%, #f1f5f9 100%);
+  color: #0b1724;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* App shell */
+.app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  gap: var(--spacing-base);
+}
+
+/* Top header */
+.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--spacing-base);
+  padding: calc(var(--spacing-base) * 1.25);
+  background: linear-gradient(135deg, rgba(91,111,251,0.95), rgba(124,58,237,0.95));
+  color: white;
+  box-shadow: var(--card-elev);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.app-header .title{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+}
+.app-header h1{
+  font-size:1.25rem;
+  font-weight:700;
+  letter-spacing: -0.02em;
+  margin:0;
+}
+.header-actions{display:flex;gap:8px;align-items:center}
+
+/* Connection pill */
+.connection-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius:999px;
+  font-size:0.9rem;
+  color: rgba(255,255,255,0.95);
+  box-shadow: 0 2px 8px rgba(11,15,28,0.18);
+}
+.status-dot{
+  width:10px;height:10px;border-radius:50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.12);
+}
+.status-dot.connected{background:var(--success)}
+.status-dot.disconnected{background:var(--danger)}
+
+/* Main area */
+.app-main{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width:100%;
+  padding: calc(var(--spacing-base) * 1.25);
+  display:flex;
+  flex-direction:column;
+  gap: 1.5rem;
+}
+
+/* Grid layout */
+.grid{
+  display:grid;
+  gap:1rem;
+}
+.grid.cols-3{grid-template-columns: repeat(3, 1fr)}
+.grid.cols-2{grid-template-columns: repeat(2, 1fr)}
+.grid.cols-auto{grid-template-columns: repeat(auto-fit,minmax(240px,1fr))}
+
+/* Card (glass) */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,252,0.98));
+  border-radius: var(--radius);
+  padding: calc(var(--spacing-base) * 1);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  border: 1px solid rgba(15,23,36,0.03);
+}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 12px 30px rgba(16,24,40,0.08);}
+
+/* Stat card */
+.stat-card{ text-align:left; overflow:hidden; position:relative; }
+.stat-card .meta{ color:var(--muted); font-size:0.9rem; margin-bottom:0.25rem; font-weight:600;}
+.stat-card .value{ font-size:1.9rem; font-weight:800; color:#0b1724; margin-bottom:0.25rem; }
+.stat-card .delta{ font-size:0.875rem; color:var(--muted); display:flex;gap:8px; align-items:center }
+
+/* Dog card */
+.dog-card{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+}
+.dog-avatar{
+  width:72px;height:72px;border-radius:12px;flex:0 0 72px; background:linear-gradient(180deg,#eef2ff,#fff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#3b82f6;
+  border:1px solid rgba(59,130,246,0.08);
+}
+.dog-info{flex:1;min-width:0}
+.dog-info h3{margin:0 0 6px 0; font-size:1.05rem}
+.dog-metadata{display:flex;gap:8px;flex-wrap:wrap;font-size:0.9rem;color:var(--muted)}
+.status-badge{padding:6px 10px;border-radius:999px;font-weight:700;font-size:0.75rem;color:white}
+.status-badge.online{background:var(--success)}
+.status-badge.away{background:var(--warning)}
+.status-badge.offline{background:var(--muted)}
+
+/* Battery bar */
+.battery{
+  width:100%;
+  height:10px;
+  background: linear-gradient(90deg, #f1f5f9, #eef2ff);
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow: inset 0 -1px 0 rgba(11,15,28,0.02);
+}
+.battery > i{ display:block; height:100%; width:40%; border-radius:999px; transition: width var(--transition-std) ease; }
+
+/* Little controls */
+.controls{ display:flex; gap:8px; align-items:center; margin-top:8px }
+.small-btn{ padding:8px 10px; border-radius:8px; border:none; font-weight:600; cursor:pointer; background:#f8fafc; box-shadow: 0 2px 6px rgba(11,15,28,0.04); transition: transform .12s; }
+.small-btn:active{ transform: translateY(1px) }
+
+/* Charts container */
+.charts{ display:flex; gap:12px; flex-direction:column; }
+.chart-card{ min-height:200px; display:flex; align-items:center; justify-content:center; }
+
+/* Footer */
+.app-footer{
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(11,15,28,0.02), rgba(11,15,28,0.02));
+  color: var(--muted);
+  text-align:center;
+  font-size:0.9rem;
+}
+
+/* Misc utils */
+.row{display:flex;gap:12px;align-items:center}
+.col{display:flex;flex-direction:column;gap:8px}
+
+/* Responsiveness */
+@media (max-width: 980px){
+  .grid.cols-3{ grid-template-columns: repeat(2,1fr) }
+}
+@media (max-width: 640px){
+  .app-header{ flex-direction:column; align-items:flex-start }
+  .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr }
+  .dog-avatar{width:56px;height:56px;flex:0 0 56px}
+}
+
+/* Medical Records Export Styles */
+.medical-records-table {
+  background-color: white;
+  border-collapse: collapse;
+}
+
+.medical-records-table th,
+.medical-records-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.medical-records-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.medical-records-table .MuiChip-root {
+  font-size: 0.75rem;
+  height: 20px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; animation: none !important; }
+}

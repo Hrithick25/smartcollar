@@ -1,0 +1,39 @@
+.dog-profiles-container {
+  padding: 20px;
+}
+
+.location-selector {
+  margin-bottom: 20px;
+}
+
+.location-selector select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.dog-profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.dog-profile-card, .add-dog-profile-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.dog-profile-card:hover, .add-dog-profile-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-dog-profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #888;
+}
