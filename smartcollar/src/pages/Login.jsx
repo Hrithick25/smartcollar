@@ -14,56 +14,64 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
-import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 // Removed FontAwesome and Google sign-in as per request
 
 // Two-pane login layout with SmartCollar explanation on the right
 const Login = () => {
   const [loginType, setLoginType] = useState(0); // 0 user, 1 admin
-  const [dogId, setDogId] = useState('');
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { loginWithDogId, loginWithAdmin } = useAuth();
+  const [info, setInfo] = useState('');
   const navigate = useNavigate();
 
-  const handleUserLogin = async () => {
+  const handleUserLogin = () => {
     setError('');
-    const trimmedDogId = dogId.trim();
-    if (!trimmedDogId) {
-      setError('Please enter a valid Dog ID');
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError('Please enter an email');
       return;
     }
-    try {
-      await loginWithDogId(trimmedDogId);
-      navigate('/');
-    } catch {
-      setError('Failed to login. Try again');
-    }
+    // Store the email in localStorage
+    localStorage.setItem('userEmail', trimmedEmail);
+    // Ensure not admin for user flow
+    localStorage.setItem('isAdmin', 'false');
+    // Preselect default Buddy profile for user dashboards
+    const buddy = {
+      id: 'BUD-123',
+      name: 'Buddy',
+      type: 'Dog',
+      breed: 'Golden Retriever',
+      age: '2 years',
+      gender: 'Male',
+      image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&auto=format&fit=crop'
+    };
+    localStorage.setItem('selectedProfile', JSON.stringify(buddy));
+    // Redirect straight to dashboard
+    window.location.href = '/dashboard';
   };
 
-  const handleAdminLogin = async () => {
-    setError('');
-    const trimmedUsername = username.trim();
-    const trimmedPassword = password.trim();
-    if (!trimmedUsername || !trimmedPassword) {
-      setError('Please enter both username and password');
-      return;
-    }
-    try {
-      await loginWithAdmin(trimmedUsername, trimmedPassword);
-      navigate('/');
-    } catch (err) {
-      setError(err.message || 'Failed to login. Try again');
-    }
+  const handleForgotPassword = () => {
+    setInfo('Redirecting to dashboard...');
+    // Store guest user in localStorage
+    localStorage.setItem('userEmail', 'guest@example.com');
+    window.location.href = '/dashboard';
+  };
+
+  const handleAdminLogin = () => {
+    // Store admin flag in localStorage
+    localStorage.setItem('isAdmin', 'true');
+    // Redirect to manage profiles for admin
+    window.location.href = '/manage-profiles';
   };
 
   const onRoleChange = (e) => {
     const val = e.target.value;
     setLoginType(val);
     setError('');
-    setDogId('');
+    setEmail('');
     setUsername('');
     setPassword('');
   };
@@ -82,9 +90,8 @@ const Login = () => {
               <Typography variant="body2" color="text.secondary">Please select your role to continue.</Typography>
             </Stack>
 
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }} variant="outlined">{error}</Alert>
-            )}
+            {error && (<Alert severity="error" sx={{ mb: 2 }} variant="outlined">{error}</Alert>)}
+            {info && (<Alert severity="success" sx={{ mb: 2 }} variant="outlined">{info}</Alert>)}
 
             <Stack spacing={2}>
               <FormControl fullWidth>
@@ -102,8 +109,12 @@ const Login = () => {
 
               {loginType === 0 && (
                 <Stack spacing={2}>
-                  <TextField label="Dog ID" value={dogId} onChange={(e) => setDogId(e.target.value)} fullWidth helperText="Enter any Dog ID to continue" />
-                  <Button variant="contained" size="large" onClick={handleUserLogin}>Continue</Button>
+                  <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth />
+                  <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth />
+                  <Stack direction="row" spacing={1}>
+                    <Button variant="contained" size="large" onClick={handleUserLogin} sx={{ flex: 1 }}>Continue</Button>
+                    <Button variant="text" size="large" onClick={handleForgotPassword}>Forgot password?</Button>
+                  </Stack>
                 </Stack>
               )}
 
@@ -151,8 +162,7 @@ const Login = () => {
             • Medical records, profiles, and settings consolidated in one dashboard.
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
-            Log in as a User with your Dog ID to view your pet’s data, or log in as an
-            Admin to manage profiles, devices, and system configuration.
+            Log in as a User with your email to view your pet’s data, or log in as an Admin to manage profiles, devices, and system configuration.
           </Typography>
         </Box>
       </Grid>

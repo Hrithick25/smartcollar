@@ -1,39 +1,144 @@
 .dog-profiles-container {
-  padding: 20px;
+  padding: 24px;
 }
 
 .location-selector {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .location-selector select {
-  padding: 10px;
-  font-size: 16px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
 }
 
 .dog-profiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
 }
 
-.dog-profile-card, .add-dog-profile-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
+.dog-profile-card {
+  background: #ffffff;
+  border: 1px solid #e6e8eb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
 }
 
-.dog-profile-card:hover, .add-dog-profile-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.dog-profile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.dog-profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dog-id {
+  font-weight: 700;
+}
+
+.delete-btn {
+  border: none;
+  background: #ffe9e9;
+  color: #b81f1f;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.delete-btn:hover {
+  background: #ffd3d3;
 }
 
 .add-dog-profile-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  color: #888;
+  background: #f6fbf9;
+  border: 1px dashed #87c7b6;
+  color: #2a7f6b;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.add-dog-profile-card:hover {
+  background: #edf7f4;
+  transform: translateY(-2px);
+}
+
+/* New layout */
+.dp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dp-search {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #2a3443;
+  background: transparent;
+  color: inherit;
+  border-radius: 10px;
+  margin: 8px 0 16px;
+}
+
+.dp-body {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.dp-avatar {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(29,78,216,0.15);
+}
+
+.dp-info { font-size: 14px; }
+.dp-name { font-weight: 800; font-size: 18px; }
+.dp-sub { color: #94a3b8; margin-bottom: 6px; }
+.dp-row { display: flex; gap: 8px; margin: 2px 0; }
+.dp-row span { color: #94a3b8; }
+.dp-actions { display: flex; gap: 12px; margin-top: 8px; }
+.dp-link { color: #60a5fa; }
+.dp-link.danger { color: #f87171; }
+.warn { color: #f59e0b; }
+.ok { color: #10b981; }
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  .dog-profile-card {
+    background: #0f172a; /* slate-900 */
+    border-color: #1f2937; /* gray-800 */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+  .dog-profile-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+  .dog-id { color: #cbd5e1; }
+  .dp-name { color: #e2e8f0; }
+  .dp-sub { color: #94a3b8; }
+  .dp-row span { color: #94a3b8; }
+  .dp-info { color: #cbd5e1; }
+  .delete-btn { background: #3f1d1d; color: #fecaca; }
+  .delete-btn:hover { background: #5b2323; }
+  .add-dog-profile-card { background: #0b1220; border-color: #334155; color: #a3bffa; }
+  .dp-search { border-color: #2a3443; background: #0b1220; color: #e2e8f0; }
 }

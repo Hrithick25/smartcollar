@@ -7,6 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
+import { useAuth } from '@/context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -19,17 +20,21 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Sidebar = ({ open, handleDrawerClose, drawerWidth = 240 }) => {
   const theme = useTheme();
+  const { user } = useAuth();
+  const isAdmin = user?.type === 'admin';
   const navigate = useNavigate();
   const location = useLocation();
 
-  const menu = [
+  const base = [
     { label: 'Dashboard', icon: <DashboardIcon />, path: '/' },
     { label: 'Medical Records', icon: <VaccinesIcon />, path: '/medical' },
     { label: 'Behavior Analysis', icon: <PetsIcon />, path: '/behavior' },
     { label: 'Live Heart Rate', icon: <PetsIcon />, path: '/heartrate' },
-    { label: 'Dog Profiles', icon: <PetsIcon />, path: '/profiles' },
     { label: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   ];
+  const adminOnly = [{ label: 'Dog Profiles', icon: <PetsIcon />, path: '/profiles' }];
+  const userOnly = [{ label: 'Home', icon: <DashboardIcon />, path: '/home' }];
+  const menu = (isAdmin ? [...base, ...adminOnly] : [...userOnly, ...base]);
 
   return (
     <Drawer

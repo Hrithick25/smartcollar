@@ -9,7 +9,7 @@ const BehaviorAnalysis = () => {
   const pct = Math.round(current.confidence * 100);
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 1100, mx: 'auto', p: { xs: 2, md: 3 }, width: '100%' }}>
       <Typography variant="h5" sx={{ fontWeight: 800, mb: 2 }}>Behavior Analysis</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
@@ -60,7 +60,7 @@ const BehaviorAnalysis = () => {
       </Grid>
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Typography variant="h6" sx={{ mb: 1 }}>Historical Trends</Typography>
@@ -68,7 +68,6 @@ const BehaviorAnalysis = () => {
             </CardContent>
           </Card>
         </Grid>
-        {/* Recommendations block removed per request */}
       </Grid>
 
       <Card sx={{ borderRadius: 3, mt: 2 }}>

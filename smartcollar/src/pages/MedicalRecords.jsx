@@ -169,7 +169,7 @@ const MedicalRecords = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 900, mx: 'auto', p: { xs: 2, md: 3 }, width: '100%' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 2, flexWrap: 'wrap' }}>
         <Typography variant="h5" sx={{ fontWeight: 800, flex: 1 }}>Medical Records</Typography>
         <Stack direction="row" spacing={1}>
