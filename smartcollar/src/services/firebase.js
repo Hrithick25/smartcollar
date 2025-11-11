@@ -1,38 +1,36 @@
-// Firebase initialization for SmartCollar
-// Safe to import anywhere. Only initializes once.
-import { initializeApp, getApps } from 'firebase/app';
-import { getAnalytics, isSupported as analyticsIsSupported } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+// ✅ /services/firebase.js — Correct Realtime Database Firebase setup for SmartCollar
 
+import { initializeApp, getApps } from "firebase/app";
+import { getAnalytics, isSupported as analyticsIsSupported } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+// ✅ Your SmartCollar Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDn5bxJSs-5La0_1eTn48Vnm0Le3mab3LU',
-  authDomain: 'iot-smartcollar.firebaseapp.com',
-  projectId: 'iot-smartcollar',
-  storageBucket: 'iot-smartcollar.firebasestorage.app',
-  messagingSenderId: '753784817791',
-  appId: '1:753784817791:web:fbbaf805980d063161974a',
-  measurementId: 'G-M5XVS86MG0',
+  apiKey: "AIzaSyAzOQ2vUF4nb-OpXSlAEfKTDiqPClxMvTQ",
+  authDomain: "smartcollar-10d06.firebaseapp.com",
+  databaseURL: "https://smartcollar-10d06-default-rtdb.firebaseio.com",
+  projectId: "smartcollar-10d06",
+  storageBucket: "smartcollar-10d06.firebasestorage.app",
+  messagingSenderId: "698896917902",
+  appId: "1:698896917902:web:5cc732d1f55209d6bc70df",
 };
 
-// Initialize Firebase only once
+// ✅ Initialize Firebase once (prevents reinitialization errors)
 export const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 
-// Core services
+// Optional: Auth + Firestore (if needed later)
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Initialize Analytics only in supported environments (browser + https)
+// ✅ Optional: Analytics support for browsers (safe check)
 export let analytics = null;
 (async () => {
   try {
-    if (typeof window !== 'undefined' && (await analyticsIsSupported())) {
+    if (typeof window !== "undefined" && (await analyticsIsSupported())) {
       analytics = getAnalytics(app);
     }
-  } catch (e) {
-    // Analytics not supported (e.g., in development or non-HTTPS); ignore
+  } catch {
     analytics = null;
   }
 })();
-
-export default app;

@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       const cred = await signInWithEmailAndPassword(auth, e, password);
       const uid = cred.user.uid;
       const profile = buildProfileFromEmail(e);
-      setUser(profile);
+      setUser({ ...profile, uid });
       await saveLoginEmail(e, profile, uid);
       return profile;
     } catch (err) {
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
           const cred = await createUserWithEmailAndPassword(auth, e, password);
           const uid = cred.user.uid;
           const profile = buildProfileFromEmail(e);
-          setUser(profile);
+          setUser({ ...profile, uid });
           await saveLoginEmail(e, profile, uid);
           return profile;
         } catch (signUpErr) {
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
           const cred = await signInWithEmailAndPassword(auth, e, password);
           const uid = cred.user.uid;
           const profile = buildProfileFromEmail(e);
-          setUser(profile);
+          setUser({ ...profile, uid });
           await saveLoginEmail(e, profile, uid);
           return profile;
         } catch (signInErr) {
